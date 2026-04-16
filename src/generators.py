@@ -32,6 +32,7 @@ def transaction_descriptions(transactions: list) -> iter:
         trans_id = transaction.get('id', 'Unknown')
         yield f"Операция {trans_id}: {description} на сумму {amount} {curr}"
 
+
 def card_number_generator(start: int, stop: int) -> iter:
     """
     Генерирует номера карт в формате XXXX XXXX XXXX XXXX.
