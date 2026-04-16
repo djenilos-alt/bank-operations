@@ -94,24 +94,3 @@ cards = card_number_generator(1000000000000000, 1000000000000003)
 for card in cards:
     print(card)  # Выведет: 1000 0000 0000 0000, 1000 0000 0000 0001, ...
 
-## Шаг 6. Проверка и коммит изменений
-
-```bash
-# Добавляем все изменения
-git add .
-
-# Проверяем линтеры
-poetry run flake8 src/ tests/
-poetry run isort src/ tests/
-
-# Запускаем тесты
-poetry run pytest tests/
-
-# Запускаем проверку покрытия
-poetry run pytest --cov=src --cov-report=html tests/
-
-# Коммит с описанием
-git commit -m "feat: add generators module with filter_by_currency, transaction_descriptions and card_number_generator"
-
-# Пушим в ветку
-git push origin feature/generators-module
