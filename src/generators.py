@@ -49,3 +49,14 @@ def card_number_generator(start: int, stop: int) -> iter:
         # Разбиваем на группы по 4 цифры
         formatted = f"{card_num[:4]} {card_num[4:8]} {card_num[8:12]} {card_num[12:]}"
         yield formatted
+
+
+def test_filter_by_currency_edge_cases(self, sample_transactions):
+    """Тест граничных случаев фильтрации по валюте."""
+    # Тест с пустой валютой
+    result = list(filter_by_currency(sample_transactions, ''))
+    assert len(result) == 0
+
+    # Тест с None в качестве валюты
+    result = list(filter_by_currency(sample_transactions, None))
+    assert len(result) == 0
