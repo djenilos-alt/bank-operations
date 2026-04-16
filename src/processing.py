@@ -1,10 +1,10 @@
 from datetime import datetime
-from typing import Dict
-from typing import List
-from typing import Optional
+from typing import List, Dict, Optional
 
-
-def filter_by_state(transactions_list: List[Dict[str, str]], state_value: str = "EXECUTED") -> List[Dict[str, str]]:
+def filter_by_state(
+    transactions_list: List[Dict[str, str]],
+    state_value: str = 'EXECUTED'
+) -> List[Dict[str, str]]:
     """
     Фильтрует список транзакций по значению поля state.
 
@@ -15,21 +15,18 @@ def filter_by_state(transactions_list: List[Dict[str, str]], state_value: str = 
             По умолчанию — 'EXECUTED'.
 
     Returns:
-        List[Dict[str, str]]: Отфильтрованный список транзакций, содержащих только
-            элементы с указанным значением state.
-
-    Example:
-        >>> transactions = [
-        ...     {'id': '441945886', 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041'},
-        ...     {'id': '41428829', 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'}
-        ... ]
-        >>> filter_by_state(transactions)
-        [{'id': '441945886', 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041'}]
+        List[Dict[str, str]]: Отфильтрованный список транзакций.
     """
-    return [transaction for transaction in transactions_list if transaction.get("state") == state_value]
+    return [
+        transaction
+        for transaction in transactions_list
+        if transaction.get('state') == state_value
+    ]
 
-
-def sort_by_date(transactions_list: List[Dict[str, str]], reverse_order: bool = True) -> List[Dict[str, str]]:
+def sort_by_date(
+    transactions_list: List[Dict[str, str]],
+    reverse_order: bool = True
+) -> List[Dict[str, str]]:
     """
     Сортирует список транзакций по дате в указанном порядке.
 
@@ -42,17 +39,7 @@ def sort_by_date(transactions_list: List[Dict[str, str]], reverse_order: bool = 
 
     Returns:
         List[Dict[str, str]]: Отсортированный список транзакций.
-
-    Example:
-        >>> transactions = [
-        ...     {'id': '441945886', 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041'},
-        ...     {'id': '41428829', 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'}
-        ... ]
-        >>> sort_by_date(transactions)
-        [{'id': '441945886', 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041'},
-         {'id': '41428829', 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'}]
     """
-
     def parse_transaction_date(date_string: str) -> Optional[datetime]:
         """Парсит строку даты в объект datetime."""
         try:
@@ -64,7 +51,12 @@ def sort_by_date(transactions_list: List[Dict[str, str]], reverse_order: bool = 
     valid_transactions = [
         transaction
         for transaction in transactions_list
-        if "date" in transaction and parse_transaction_date(transaction["date"]) is not None
+        if 'date' in transaction and parse_transaction_date(transaction['date']) is not None
     ]
 
-    return sorted(valid_transactions, key=lambda x: parse_transaction_date(x["date"]), reverse=reverse_order)
+    return sorted(
+        valid_transactions,
+        key=lambda x: parse_transaction_date(x['date']),
+        reverse=reverse_order
+    )
+
