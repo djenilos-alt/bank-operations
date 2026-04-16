@@ -94,3 +94,46 @@ cards = card_number_generator(1000000000000000, 1000000000000003)
 for card in cards:
     print(card)  # Выведет: 1000 0000 0000 0000, 1000 0000 0000 0001, ...
 
+## Модуль generators
+
+Новый модуль для эффективной работы с большими объёмами данных транзакций через генераторы.
+
+### Функции модуля
+
+1. **`filter_by_currency(transactions, currency)`**
+   Фильтрует транзакции по указанной валюте, возвращая итератор.
+
+   **Пример использования:**
+   ```python
+   from src.generators import filter_by_currency
+
+   transactions = [
+       {'id': '1', 'currency': 'USD', 'amount': '100'},
+       {'id': '2', 'currency': 'EUR', 'amount': '200'}
+   ]
+   filtered = filter_by_currency(transactions, 'USD')
+   for transaction in filtered:
+       print(transaction)
+
+transaction_descriptions(transactions)
+Генерирует описания транзакций по очереди.
+
+Пример использования:
+
+python
+from src.generators import transaction_descriptions
+
+descriptions = transaction_descriptions(transactions)
+for desc in descriptions:
+    print(desc)  # "Операция 1: ... на сумму 100 USD"
+card_number_generator(start, stop)
+Генерирует номера карт в формате XXXX XXXX XXXX XXXX в заданном диапазоне.
+
+Пример использования:
+
+python
+from src.generators import card_number_generator
+
+cards = card_number_generator(1000000000000000, 1000000000000003)
+for card in cards:
+    print(card)  # "1000 0000 0000 0000", "1000 0000 0000 0001", ...

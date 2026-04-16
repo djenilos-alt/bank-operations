@@ -25,6 +25,7 @@ def sample_transactions():
         }
     ]
 
+
 @pytest.fixture
 def empty_transactions():
     """Пустой список транзакций."""
