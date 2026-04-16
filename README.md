@@ -54,3 +54,64 @@ cd bank-operations-widget
 
    sorted_transactions = sort_by_date(transactions)
 # Отсортирует транзакции от новых к старым
+
+## Модуль generators
+
+Новый модуль для работы с генераторами данных транзакций.
+
+### Функции модуля
+
+1. **`filter_by_currency(transactions, currency)`**
+   Фильтрует транзакции по указанной валюте. Возвращает итератор.
+
+   **Пример использования:**
+   ```python
+   from src.generators import filter_by_currency
+
+   filtered = filter_by_currency(transactions_list, 'USD')
+   for transaction in filtered:
+       print(transaction)
+
+transaction_descriptions(transactions)
+Генерирует описания транзакций по очереди.
+
+Пример использования:
+
+python
+from src.generators import transaction_descriptions
+
+for desc in transaction_descriptions(transactions_list):
+    print(desc)
+card_number_generator(start, stop)
+Генерирует номера карт в заданном диапазоне.
+
+Пример использования:
+
+python
+from src.generators import card_number_generator
+
+cards = card_number_generator(1000000000000000, 1000000000000003)
+for card in cards:
+    print(card)  # Выведет: 1000 0000 0000 0000, 1000 0000 0000 0001, ...
+
+## Шаг 6. Проверка и коммит изменений
+
+```bash
+# Добавляем все изменения
+git add .
+
+# Проверяем линтеры
+poetry run flake8 src/ tests/
+poetry run isort src/ tests/
+
+# Запускаем тесты
+poetry run pytest tests/
+
+# Запускаем проверку покрытия
+poetry run pytest --cov=src --cov-report=html tests/
+
+# Коммит с описанием
+git commit -m "feat: add generators module with filter_by_currency, transaction_descriptions and card_number_generator"
+
+# Пушим в ветку
+git push origin feature/generators-module
