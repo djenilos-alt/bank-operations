@@ -47,3 +47,11 @@ class TestWidgetFunctions:
         """Тест обработки некорректной даты."""
         result = get_date("invalid-date-format")
         assert result == "invalid-date-format"
+
+def test_get_date_invalid_input(self):
+    """Тест обработки некорректной даты."""
+    result = get_date("invalid-date")
+    assert result == "invalid-date"
+
+    result = get_date(None)
+    assert result is None
