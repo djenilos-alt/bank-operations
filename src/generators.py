@@ -2,6 +2,7 @@ def filter_by_currency(transactions: list, currency: str) -> iter:
     """
     Фильтрует транзакции по валюте.
 
+
     Args:
         transactions (list): Список словарей с транзакциями.
         currency (str): Валюта для фильтрации (например, 'USD').
