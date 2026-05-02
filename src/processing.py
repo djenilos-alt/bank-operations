@@ -1,7 +1,18 @@
 from datetime import datetime
 
 
-def sort_by_date(transactions, reverse_order=False):
+from typing import List, Dict, Any
+
+
+def sort_by_date(
+
+
+    transactions: list[dict[str, Any]],
+    reverse_order: bool = False
+) -> list[dict[str, Any]]:
+    """Сортирует транзакции по дате."""
+    # код функции
+    pass
     """
     Сортирует транзакции по дате.
 

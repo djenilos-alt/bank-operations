@@ -1,64 +1,118 @@
-def filter_by_currency(transactions: list, currency: str) -> iter:
-    """
-    Фильтрует транзакции по валюте.
+from collections.abc import Iterator
+from typing import Any, List, Dict, Optional
 
+
+def transaction_generator(
+    transactions: List[Dict[str, Any]]
+) -> Iterator[Dict[str, Any]]:
+    """
+    Генератор для последовательного получения транзакций.
 
     Args:
-        transactions (list): Список словарей с транзакциями.
-        currency (str): Валюта для фильтрации (например, 'USD').
+        transactions: Список транзакций в формате словаря.
 
     Yields:
-        dict: Транзакция с указанной валютой.
+        Каждая транзакция по очереди.
+
+    Example:
+        >>> transactions = [{'id': 1}, {'id': 2}]
+        >>> gen = transaction_generator(transactions)
+        >>> next(gen)
+        {'id': 1}
     """
     for transaction in transactions:
-        if transaction.get('currency') == currency:
+        yield transaction
+
+
+def filtered_transaction_generator(
+    transactions: List[Dict[str, Any]],
+    filter_key: str,
+    filter_value: Any
+) -> Iterator[Dict[str, Any]]:
+    """
+    Генератор транзакций с фильтрацией по заданному критерию.
+
+    Args:
+        transactions: Список транзакций для фильтрации.
+        filter_key: Ключ для фильтрации (например, 'state').
+        filter_value: Значение для фильтрации (например, 'EXECUTED').
+
+    Yields:
+        Транзакции, удовлетворяющие условию фильтрации.
+
+    Example:
+        >>> transactions = [
+        ...     {'id': 1, 'state': 'EXECUTED'},
+        ...     {'id': 2, 'state': 'CANCELED'}
+        ... ]
+        >>> gen = filtered_transaction_generator(transactions, 'state', 'EXECUTED')
+        >>> next(gen)
+        {'id': 1, 'state': 'EXECUTED'}
+    """
+    for transaction in transactions:
+        if transaction.get(filter_key) == filter_value:
             yield transaction
 
 
-def transaction_descriptions(transactions: list) -> iter:
+def amount_generator(
+    transactions: List[Dict[str, Any]],
+    currency: Optional[str] = None
+) -> Iterator[float]:
     """
-    Генерирует описания транзакций.
+    Генератор сумм транзакций с возможностью фильтрации по валюте.
 
     Args:
-        transactions (list): Список словарей с транзакциями.
+        transactions: Список транзакций.
+        currency: Валюта для фильтрации (опционально).
 
     Yields:
-        str: Описание транзакции в формате:
-            "Операция {id}: {description} на сумму {amount} {currency}"
+        Суммы транзакций (преобразованные в float) по очереди.
+
+    Example:
+        >>> transactions = [
+        ...     {'amount': '100.50', 'currency': 'руб.'},
+        ...     {'amount': '200.00', 'currency': 'USD'}
+        ... ]
+        >>> gen = amount_generator(transactions, 'руб.')
+        >>> next(gen)
+        100.5
     """
     for transaction in transactions:
-        description = transaction.get('description', 'Без описания')
-        amount = transaction.get('amount', '0')
-        curr = transaction.get('currency', 'N/A')
-        trans_id = transaction.get('id', 'Unknown')
-        yield f"Операция {trans_id}: {description} на сумму {amount} {curr}"
+        # Проверяем валюту, если она указана
+        if currency and transaction.get('currency') != currency:
+            continue
+
+        try:
+            # Преобразуем строку в число
+            amount = float(transaction['amount'])
+            yield amount
+        except (ValueError, KeyError):
+            # Пропускаем транзакции с некорректными суммами
+            continue
 
 
-def card_number_generator(start: int, stop: int) -> iter:
+def date_generator(
+    transactions: List[Dict[str, Any]]
+) -> Iterator[str]:
     """
-    Генерирует номера карт в формате XXXX XXXX XXXX XXXX.
+    Генератор дат транзакций в формате ISO.
 
     Args:
-        start (int): Начальное число для генерации.
-        stop (int): Конечное число для генерации (не включается).
+        transactions: Список транзакций с полем 'date'.
 
     Yields:
-        str: Номер карты в формате 'XXXX XXXX XXXX XXXX'.
+        Даты транзакций в исходном формате.
+
+    Example:
+        >>> transactions = [
+        ...     {'date': '2023-01-01T10:00:00'},
+        ...     {'date': '2023-02-01T12:30:00'}
+        ... ]
+        >>> gen = date_generator(transactions)
+        >>> next(gen)
+        '2023-01-01T10:00:00'
     """
-    for num in range(start, stop):
-        # Форматируем число до 16 цифр с ведущими нулями
-        card_num = f"{num:016d}"
-        # Разбиваем на группы по 4 цифры
-        formatted = f"{card_num[:4]} {card_num[4:8]} {card_num[8:12]} {card_num[12:]}"
-        yield formatted
-
-
-def test_filter_by_currency_edge_cases(self, sample_transactions):
-    """Тест граничных случаев фильтрации по валюте."""
-    # Тест с пустой валютой
-    result = list(filter_by_currency(sample_transactions, ''))
-    assert len(result) == 0
-
-    # Тест с None в качестве валюты
-    result = list(filter_by_currency(sample_transactions, None))
-    assert len(result) == 0
+    for transaction in transactions:
+        date_str = transaction.get('date', '')
+        if date_str:
+            yield date_str

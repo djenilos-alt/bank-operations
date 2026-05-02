@@ -74,7 +74,7 @@ def log(filename: Optional[str] = None) -> Callable:
                 execution_time = end_time - start_time
                 error_message = (
                     f"Ошибка в функции {func.__name__}: {type(e).__name__}: {e}. "
-            f"Аргументы: {signature}. Время выполнения: {execution_time:.4f} сек.\n"
+                    f"Аргументы: {signature}. Время выполнения: {execution_time:.4f} сек.\n"
                 )
 
                 if filename:

@@ -1,53 +1,29 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [project]
-name = "pythonproject1"
+name = "bank-operations"
 version = "0.1.0"
-description = ""
+description = "Bank operations processing with JSON and currency conversion"
+readme = "README.md"
 authors = [
-    {name = "Evgenia Los",email = "djeni.los@gmail.com"}
+    {name = "Your Name", email = "your.email@example.com"}
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "pytest (>=9.0.2,<10.0.0)"
+    "requests>=2.31",
+    "python-dotenv>=1.0"
 ]
 
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-lint = [
-    "flake8 (>=7.3.0,<8.0.0)",
-    "mypy (>=1.19.1,<2.0.0)",
-    "black (>=26.3.1,<27.0.0)",
-    "isort (>=8.0.1,<9.0.0)"
-]
-
-# Конфигурация Black
+[project.optional-dependencies]
 dev = [
-    "pytest (>=9.0.3,<10.0.0)",
-    "pytest-cov (>=7.1.0,<8.0.0)"
+    "pytest>=9.0",
+    "pytest-cov>=7.0; python_version >= '3.9'",
+    "flake8>=7.0",
+    "mypy>=1.9",
+    "isort>=5.13"
 ]
-[tool.black]
-line-length = 119
-exclude = '''
-/\.git
-'''
 
-# Конфигурация isort
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-line_length = 119
-force_single_line = true
-
-# Конфигурация mypy
-[tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-exclude = [
-    "venv/",
-    ".venv/"
-]
+[[tool.poetry.packages]]
+include = "src"

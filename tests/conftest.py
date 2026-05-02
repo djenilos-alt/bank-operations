@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import pytest
 
 
@@ -42,37 +40,9 @@ def sample_transactions():
 
 @pytest.fixture
 def sample_transactions():
-    """Список тестовых транзакций."""
-    return [
-        {
-            'id': '441945886',
-            'state': 'EXECUTED',
-            'date': '2019-08-26T10:50:58.294041',
-            'amount': '31957.58',
-            'currency': 'руб.'
-        },
-        {
-            'id': '41428829',
-            'state': 'CANCELED',
-            'date': '2019-07-03T18:35:29.512364',
-            'amount': '8099.03',
-            'currency': 'руб.'
-        },
-        {
-            'id': '939719570',
-            'state': 'EXECUTED',
-            'date': '2018-06-30T02:08:58.425572',
-            'amount': '9533.75',
-            'currency': 'руб.'
-        }
-    ]
+    return [...]
 
 
 @pytest.fixture
-def invalid_transactions():
-    """Фикстура с транзакциями, содержащими некорректные даты."""
-    return [
-        {'id': '1', 'state': 'EXECUTED', 'date': 'invalid-date'},
-        {'id': '2', 'state': 'CANCELED', 'date': ''},
-        {'id': '3', 'state': 'EXECUTED'}
-    ]
+def another_sample_transactions():
+    return [...]
