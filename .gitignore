@@ -64,5 +64,3 @@ dmypy.json
 
 # pytest
 .pytest_cache/
-
-.env

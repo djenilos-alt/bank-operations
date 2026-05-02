@@ -55,37 +55,85 @@ cd bank-operations-widget
    sorted_transactions = sort_by_date(transactions)
 # Отсортирует транзакции от новых к старым
 
-## Модуль decorators
+## Модуль generators
 
-Модуль содержит декораторы для логирования выполнения функций.
+Новый модуль для работы с генераторами данных транзакций.
 
-### Декоратор `log`
+### Функции модуля
 
-Декоратор для автоматического логирования вызовов функций, их результатов и ошибок.
+1. **`filter_by_currency(transactions, currency)`**
+   Фильтрует транзакции по указанной валюте. Возвращает итератор.
 
-**Параметры:**
-* `filename` (опционально) — имя файла для записи логов. Если не указано, логи выводятся в консоль.
+   **Пример использования:**
+   ```python
+   from src.generators import filter_by_currency
 
-**Логирует:**
-* начало выполнения функции (имя и аргументы);
-* успешное завершение (время выполнения и результат);
-* ошибки (тип ошибки, сообщение, входные параметры).
+   filtered = filter_by_currency(transactions_list, 'USD')
+   for transaction in filtered:
+       print(transaction)
 
-**Пример использования:**
+transaction_descriptions(transactions)
+Генерирует описания транзакций по очереди.
 
-```python
-from src.decorators import log
+Пример использования:
 
-# Логирование в консоль
-@log()
-def add(a, b):
-    return a + b
+python
+from src.generators import transaction_descriptions
 
-# Логирование в файл
-@log(filename="app.log")
-def divide(x, y):
-    return x / y
+for desc in transaction_descriptions(transactions_list):
+    print(desc)
+card_number_generator(start, stop)
+Генерирует номера карт в заданном диапазоне.
 
-# Использование
-result1 = add(5, 3)  # Вывод в консоль
-result2 = divide(10, 2)  # Запись в файл app.log
+Пример использования:
+
+python
+from src.generators import card_number_generator
+
+cards = card_number_generator(1000000000000000, 1000000000000003)
+for card in cards:
+    print(card)  # Выведет: 1000 0000 0000 0000, 1000 0000 0000 0001, ...
+
+## Модуль generators
+
+Новый модуль для эффективной работы с большими объёмами данных транзакций через генераторы.
+
+### Функции модуля
+
+1. **`filter_by_currency(transactions, currency)`**
+   Фильтрует транзакции по указанной валюте, возвращая итератор.
+
+   **Пример использования:**
+   ```python
+   from src.generators import filter_by_currency
+
+   transactions = [
+       {'id': '1', 'currency': 'USD', 'amount': '100'},
+       {'id': '2', 'currency': 'EUR', 'amount': '200'}
+   ]
+   filtered = filter_by_currency(transactions, 'USD')
+   for transaction in filtered:
+       print(transaction)
+
+transaction_descriptions(transactions)
+Генерирует описания транзакций по очереди.
+
+Пример использования:
+
+python
+from src.generators import transaction_descriptions
+
+descriptions = transaction_descriptions(transactions)
+for desc in descriptions:
+    print(desc)  # "Операция 1: ... на сумму 100 USD"
+card_number_generator(start, stop)
+Генерирует номера карт в формате XXXX XXXX XXXX XXXX в заданном диапазоне.
+
+Пример использования:
+
+python
+from src.generators import card_number_generator
+
+cards = card_number_generator(1000000000000000, 1000000000000003)
+for card in cards:
+    print(card)  # "1000 0000 0000 0000", "1000 0000 0000 0001", ...
