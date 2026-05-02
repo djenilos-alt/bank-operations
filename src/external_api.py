@@ -1,12 +1,13 @@
 import requests
 import os
 from dotenv import load_dotenv
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 load_dotenv()
 
 API_KEY = os.getenv('EXCHANGE_API_KEY')
 BASE_URL = 'https://api.apilayer.com/exchangerates_data/latest'
+
 
 def convert_to_rubles(transaction: Dict[str, Any]) -> float:
     """
@@ -31,4 +32,3 @@ def convert_to_rubles(transaction: Dict[str, Any]) -> float:
             raise ValueError(f"Unsupported currency: {currency}")
     except requests.RequestException as e:
         raise ValueError(f"API error: {e}")
-

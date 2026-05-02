@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from src.masks import get_mask_account
 from src.masks import get_mask_card_number
 
@@ -13,11 +11,9 @@ def mask_account_card(input_string: str) -> str:
     if len(parts) < 2:
         return input_string  # недостаточно данных
 
-
     # Определяем тип: счёт или карта
     last_part = parts[-1]
     is_account = any(word.lower() in input_string.lower() for word in ['счёт', 'счет', 'account'])
-
 
     if is_account:
         # Обрабатываем счёт (20 цифр)
@@ -34,3 +30,15 @@ def mask_account_card(input_string: str) -> str:
             return ' '.join(parts[:-1]) + ' ' + masked
         else:
             return input_string
+
+
+def get_date(date_string):
+    """Преобразует строку даты в формат ДД.ММ.ГГГГ."""
+    # Пример реализации
+    if not date_string:
+        return ""
+        parts = date_string.split('-')
+    if len(parts) == 3:
+        year, month, day = parts
+    return f"{day}.{month}.{year}"
+    return date_string

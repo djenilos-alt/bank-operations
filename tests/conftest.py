@@ -39,10 +39,5 @@ def sample_transactions():
 
 
 @pytest.fixture
-def sample_transactions():
-    return [...]
-
-
-@pytest.fixture
 def another_sample_transactions():
     return [...]

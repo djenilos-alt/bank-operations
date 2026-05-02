@@ -1,6 +1,4 @@
 import pytest
-import os
-from pathlib import Path
 from src.decorators import log
 
 
@@ -81,10 +79,8 @@ class TestLogDecorator:
         def greet(name, greeting="Привет"):
             return f"{greeting}, {name}!"
 
-
         result = greet("Анна", greeting="Здравствуйте")
         captured = capsys.readouterr()
-
         assert "Вызов функции greet('Анна', greeting='Здравствуйте')" in captured.out
         assert "Результат: 'Здравствуйте, Анна!'" in captured.out
         assert result == "Здравствуйте, Анна!"
