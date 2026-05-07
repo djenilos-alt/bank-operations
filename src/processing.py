@@ -1,4 +1,20 @@
 from datetime import datetime
+
+from typing import Any
+
+
+def sort_by_date(
+
+
+    transactions: list[dict[str, Any]],
+    reverse_order: bool = False
+) -> list[dict[str, Any]]:
+    """Сортирует транзакции по дате."""
+    # код функции
+    pass
+    """
+    Сортирует транзакции по дате.
+
 from typing import List, Dict, Optional
 
 def filter_by_state(
@@ -30,12 +46,10 @@ def sort_by_date(
     """
     Сортирует список транзакций по дате в указанном порядке.
 
+
     Args:
-        transactions_list (List[Dict[str, str]]): Список словарей с транзакциями.
-            Каждый словарь должен содержать ключ 'date' в формате ISO.
-        reverse_order (bool): Порядок сортировки:
-            True — убывание (новые транзакции первыми),
-            False — возрастание (старые транзакции первыми).
+        transactions (list): Список транзакций с полем 'date'.
+        reverse_order (bool): Если True — сортировка по убыванию, иначе по возрастанию.
 
     Returns:
         List[Dict[str, str]]: Отсортированный список транзакций.
